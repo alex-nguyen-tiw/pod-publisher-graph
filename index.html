@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>POD Publisher - Blog & Money Page Knowledge Graph</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+    #header {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0 0 6px 0;
+      color: #38bdf8;
+    }
+    .legend {
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    #network {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>🕸️ POD Blog & Internal Linking Knowledge Graph (Obsidian Style)</h1>
+    <div class="legend">
+      <div class="legend-item"><div class="dot" style="background: #10b981;"></div> Published Blog Post</div>
+      <div class="legend-item"><div class="dot" style="background: #3b82f6;"></div> Draft Blog Post</div>
+      <div class="legend-item"><div class="dot" style="background: #f59e0b;"></div> Money Category (WooCommerce)</div>
+      <div class="legend-item"><div class="dot" style="background: #8b5cf6;"></div> Standalone Tool Page</div>
+    </div>
+  </div>
+  <div id="network"></div>
+
+  <script>
+    const nodes = new vis.DataSet([{"id": "post_59483", "label": "[59483] Does Cotton Shrink? What to Ex...", "title": "<b>Does Cotton Shrink? What to Expect and How to Choose the Right Size</b><br>Status: draft<br>URL: https://tshirtsiwant.com/blog/does-cotton-shrink/", "group": "blog_draft", "value": 15}, {"id": "post_59476", "label": "[59476] Unisex vs. Women's T-Shirt Siz...", "title": "<b>Unisex vs. Women's T-Shirt Sizes: How to Pick the Right Fit for Someone Else</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/unisex-t-shirt-size-chart/", "group": "blog_published", "value": 15}, {"id": "post_59470", "label": "[59470] Gifts for Mechanics: Useful Pi...", "title": "<b>Gifts for Mechanics: Useful Picks, Funny Picks, and What to Skip</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/gifts-for-mechanics/", "group": "blog_published", "value": 15}, {"id": "post_59460", "label": "[59460] Gift Ideas for Farmers: Practi...", "title": "<b>Gift Ideas for Farmers: Practical Picks They'll Actually Use</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/gift-ideas-for-farmers/", "group": "blog_published", "value": 15}, {"id": "post_59456", "label": "[59456] Gifts for Truck Drivers: What ...", "title": "<b>Gifts for Truck Drivers: What They'll Actually Use (and When a Trucker Shirt Fits)</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/gifts-for-truck-drivers/", "group": "blog_published", "value": 15}, {"id": "post_59449", "label": "[59449] How to Wash Graphic Tees Witho...", "title": "<b>How to Wash Graphic Tees Without Cracking or Peeling</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/how-to-wash-graphic-tees/", "group": "blog_published", "value": 15}, {"id": "post_53016", "label": "[53016] Best Image Downloader Extensio...", "title": "<b>Best Image Downloader Extension Guide: Bulk Save Web Images Fast</b><br>Status: publish<br>URL: https://tshirtsiwant.com/image-downloader-extension/", "group": "tool_page", "value": 15}, {"id": "post_52934", "label": "[52934] Funny Teacher Gift Ideas: A Pr...", "title": "<b>Funny Teacher Gift Ideas: A Practical Guide</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/funny-teacher-gift-ideas/", "group": "blog_published", "value": 15}, {"id": "post_52932", "label": "[52932] Nurse Graduation Gifts: A Prac...", "title": "<b>Nurse Graduation Gifts: A Practical Guide</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/nurse-graduation-gifts/", "group": "blog_published", "value": 15}, {"id": "post_52916", "label": "[52916] Cotton vs Performance Shirts: ...", "title": "<b>Cotton vs Performance Shirts: Which Fits Your Day?</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/cotton-vs-performance-shirts/", "group": "blog_published", "value": 15}, {"id": "post_52845", "label": "[52845] You're subscribed...", "title": "<b>You're subscribed</b><br>Status: publish<br>URL: https://tshirtsiwant.com/newsletter-confirmed/", "group": "blog_published", "value": 15}, {"id": "post_52789", "label": "[52789] Homepage Performance V2 (Draft...", "title": "<b>Homepage Performance V2 (Draft)</b><br>Status: draft<br>URL: https://tshirtsiwant.com/", "group": "blog_draft", "value": 15}, {"id": "post_52474", "label": "[52474] Store Reviews...", "title": "<b>Store Reviews</b><br>Status: publish<br>URL: https://tshirtsiwant.com/store-reviews/", "group": "blog_published", "value": 15}, {"id": "post_25937", "label": "[25937] Cute Cat QR Code Shirt \u2013 Watch...", "title": "<b>Cute Cat QR Code Shirt \u2013 Watch a New Lovely Video Daily Tee</b><br>Status: publish<br>URL: https://tshirtsiwant.com/cute-cat/", "group": "blog_published", "value": 15}, {"id": "post_25362", "label": "[25362] Message for Trump Haters...", "title": "<b>Message for Trump Haters</b><br>Status: publish<br>URL: https://tshirtsiwant.com/qr-4547/", "group": "blog_published", "value": 15}, {"id": "post_15277", "label": "[15277] Hilariously Unique Funny Chris...", "title": "<b>Hilariously Unique Funny Christmas Gifts for Everyone on Your List</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/hilariously-unique-funny-christmas-gifts-for-everyone-on-your-list/", "group": "blog_published", "value": 15}, {"id": "post_15273", "label": "[15273] The Ultimate Gift Guide: Top G...", "title": "<b>The Ultimate Gift Guide: Top Gift Ideas for Movie Lovers and Film Buffs</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/the-ultimate-gift-guide-top-gift-ideas-for-movie-lovers-and-film-buffs/", "group": "blog_published", "value": 15}, {"id": "post_15254", "label": "[15254] Reviews...", "title": "<b>Reviews</b><br>Status: draft<br>URL: https://tshirtsiwant.com/", "group": "blog_draft", "value": 15}, {"id": "post_1840", "label": "[1840] FAQs...", "title": "<b>FAQs</b><br>Status: publish<br>URL: https://tshirtsiwant.com/faqs/", "group": "blog_published", "value": 15}, {"id": "post_1820", "label": "[1820] Contact Us...", "title": "<b>Contact Us</b><br>Status: publish<br>URL: https://tshirtsiwant.com/contact-us/", "group": "blog_published", "value": 15}, {"id": "post_1508", "label": "[1508] Payment Policy...", "title": "<b>Payment Policy</b><br>Status: publish<br>URL: https://tshirtsiwant.com/payment-policy/", "group": "blog_published", "value": 15}, {"id": "post_1506", "label": "[1506] Track Your Order...", "title": "<b>Track Your Order</b><br>Status: publish<br>URL: https://tshirtsiwant.com/track-your-order/", "group": "blog_published", "value": 15}, {"id": "post_1504", "label": "[1504] Terms and Conditions...", "title": "<b>Terms and Conditions</b><br>Status: publish<br>URL: https://tshirtsiwant.com/terms-and-conditions/", "group": "blog_published", "value": 15}, {"id": "post_1502", "label": "[1502] Shipping Policy...", "title": "<b>Shipping Policy</b><br>Status: publish<br>URL: https://tshirtsiwant.com/shipping-policy/", "group": "blog_published", "value": 15}, {"id": "post_1495", "label": "[1495] DMCA...", "title": "<b>DMCA</b><br>Status: publish<br>URL: https://tshirtsiwant.com/dmca/", "group": "blog_published", "value": 15}, {"id": "post_1492", "label": "[1492] About Us...", "title": "<b>About Us</b><br>Status: publish<br>URL: https://tshirtsiwant.com/about-us/", "group": "blog_published", "value": 15}, {"id": "post_16", "label": "[16] Blog...", "title": "<b>Blog</b><br>Status: publish<br>URL: https://tshirtsiwant.com/blog/", "group": "blog_published", "value": 15}, {"id": "post_14", "label": "[14] Tshirts I Want Store...", "title": "<b>Tshirts I Want Store</b><br>Status: publish<br>URL: https://tshirtsiwant.com/", "group": "blog_published", "value": 15}, {"id": "post_12", "label": "[12] Return and Refund Policies...", "title": "<b>Return and Refund Policies</b><br>Status: publish<br>URL: https://tshirtsiwant.com/return-and-refund-policies/", "group": "blog_published", "value": 15}, {"id": "post_11", "label": "[11] My account...", "title": "<b>My account</b><br>Status: publish<br>URL: https://tshirtsiwant.com/my-account/", "group": "blog_published", "value": 15}, {"id": "post_10", "label": "[10] Checkout...", "title": "<b>Checkout</b><br>Status: publish<br>URL: https://tshirtsiwant.com/checkout/", "group": "blog_published", "value": 15}, {"id": "post_9", "label": "[9] Cart...", "title": "<b>Cart</b><br>Status: publish<br>URL: https://tshirtsiwant.com/cart/", "group": "blog_published", "value": 15}, {"id": "post_8", "label": "[8] Shop...", "title": "<b>Shop</b><br>Status: publish<br>URL: https://tshirtsiwant.com/shop/", "group": "blog_published", "value": 15}, {"id": "post_3", "label": "[3] Privacy Policy...", "title": "<b>Privacy Policy</b><br>Status: publish<br>URL: https://tshirtsiwant.com/privacy-policy/", "group": "blog_published", "value": 15}, {"id": "cat_classic-tees", "label": "\ud83d\udcc2 /classic-tees/", "title": "<b>Money Category</b><br>https://tshirtsiwant.com/graphic-apparel/classic-tees/", "group": "money_category", "value": 25}, {"id": "cat_nurse-shirts", "label": "\ud83d\udcc2 /nurse-shirts/", "title": "<b>Money Category</b><br>https://tshirtsiwant.com/occupation-shirts/nurse-shirts/", "group": "money_category", "value": 25}, {"id": "cat_teacher-shirts", "label": "\ud83d\udcc2 /teacher-shirts/", "title": "<b>Money Category</b><br>https://tshirtsiwant.com/occupation-shirts/teacher-shirts/", "group": "money_category", "value": 25}, {"id": "cat_farmer-shirts", "label": "\ud83d\udcc2 /farmer-shirts/", "title": "<b>Money Category</b><br>https://tshirtsiwant.com/occupation-shirts/farmer-shirts/", "group": "money_category", "value": 25}, {"id": "cat_trucker-shirts", "label": "\ud83d\udcc2 /trucker-shirts/", "title": "<b>Money Category</b><br>https://tshirtsiwant.com/occupation-shirts/trucker-shirts/", "group": "money_category", "value": 25}, {"id": "cat_mechanic-shirts", "label": "\ud83d\udcc2 /mechanic-shirts/", "title": "<b>Money Category</b><br>https://tshirtsiwant.com/occupation-shirts/mechanic-shirts/", "group": "money_category", "value": 25}]);
+    const edges = new vis.DataSet([{"from": "post_52916", "to": "post_59449", "label": "graphic tee washing ", "title": "Anchor: graphic tee washing guide<br>Kind: editorial", "arrows": "to"}, {"from": "post_52916", "to": "post_59449", "label": "guide to washing gra", "title": "Anchor: guide to washing graphic tees<br>Kind: editorial", "arrows": "to"}, {"from": "post_52916", "to": "cat_classic-tees", "label": "Browse T-Shirts", "title": "Anchor: Browse T-Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_52932", "to": "cat_nurse-shirts", "label": "Browse Nurse Shirts", "title": "Anchor: Browse Nurse Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_52932", "to": "cat_nurse-shirts", "label": "nurse shirts collect", "title": "Anchor: nurse shirts collection<br>Kind: editorial", "arrows": "to"}, {"from": "post_52932", "to": "cat_nurse-shirts", "label": "Browse Nurse Shirts", "title": "Anchor: Browse Nurse Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_52932", "to": "cat_nurse-shirts", "label": "Browse Nurse Shirts", "title": "Anchor: Browse Nurse Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_52934", "to": "cat_teacher-shirts", "label": "Browse Teacher Shirt", "title": "Anchor: Browse Teacher Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_52934", "to": "cat_teacher-shirts", "label": "Browse Teacher Shirt", "title": "Anchor: Browse Teacher Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59449", "to": "cat_classic-tees", "label": "Browse T-Shirts", "title": "Anchor: Browse T-Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59449", "to": "cat_classic-tees", "label": "Browse T-Shirts", "title": "Anchor: Browse T-Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_3", "to": "post_1820", "label": "contact us", "title": "Anchor: contact us<br>Kind: editorial", "arrows": "to"}, {"from": "post_11", "to": "post_1506", "label": "Track Your Order", "title": "Anchor: Track Your Order<br>Kind: editorial", "arrows": "to"}, {"from": "post_1492", "to": "post_1820", "label": "support team", "title": "Anchor: support team<br>Kind: editorial", "arrows": "to"}, {"from": "post_1504", "to": "post_1502", "label": "Shipping Policy", "title": "Anchor: Shipping Policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_1504", "to": "post_12", "label": "Return & Refund Poli", "title": "Anchor: Return & Refund Policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_1508", "to": "post_1820", "label": "contact us", "title": "Anchor: contact us<br>Kind: editorial", "arrows": "to"}, {"from": "post_1508", "to": "post_12", "label": "Return & Refund Poli", "title": "Anchor: Return & Refund Policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_1820", "to": "post_12", "label": "Return & Refund Poli", "title": "Anchor: Return & Refund Policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_52845", "to": "post_8", "label": "Shop new designs", "title": "Anchor: Shop new designs<br>Kind: cta", "arrows": "to"}, {"from": "post_59460", "to": "cat_farmer-shirts", "label": "Browse Farmer Shirts", "title": "Anchor: Browse Farmer Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59460", "to": "post_1502", "label": "shipping policy", "title": "Anchor: shipping policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_59456", "to": "cat_trucker-shirts", "label": "Browse Trucker Shirt", "title": "Anchor: Browse Trucker Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59456", "to": "post_1502", "label": "shipping policy", "title": "Anchor: shipping policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_1502", "to": "post_1820", "label": "contact us", "title": "Anchor: contact us<br>Kind: editorial", "arrows": "to"}, {"from": "post_59470", "to": "cat_mechanic-shirts", "label": "Browse Mechanic Shir", "title": "Anchor: Browse Mechanic Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59470", "to": "post_1502", "label": "our shipping policy", "title": "Anchor: our shipping policy<br>Kind: editorial", "arrows": "to"}, {"from": "post_59476", "to": "post_52916", "label": "our related comparis", "title": "Anchor: our related comparison guide<br>Kind: editorial", "arrows": "to"}, {"from": "post_59476", "to": "post_59449", "label": "how to wash graphic ", "title": "Anchor: how to wash graphic tees<br>Kind: editorial", "arrows": "to"}, {"from": "post_59476", "to": "cat_classic-tees", "label": "Browse T-Shirts", "title": "Anchor: Browse T-Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59483", "to": "post_52916", "label": "cotton vs performanc", "title": "Anchor: cotton vs performance shirts<br>Kind: editorial", "arrows": "to"}, {"from": "post_59483", "to": "cat_classic-tees", "label": "Browse T-Shirts", "title": "Anchor: Browse T-Shirts<br>Kind: cta", "arrows": "to"}, {"from": "post_59483", "to": "post_59449", "label": "how to wash graphic ", "title": "Anchor: how to wash graphic tees<br>Kind: editorial", "arrows": "to"}, {"from": "post_59483", "to": "cat_classic-tees", "label": "Classic Tees collect", "title": "Anchor: Classic Tees collection<br>Kind: editorial", "arrows": "to"}]);
+
+    const container = document.getElementById('network');
+    const data = { nodes: nodes, edges: edges };
+    const options = {
+      nodes: {
+        shape: 'dot',
+        font: {
+          color: '#f8fafc',
+          size: 14,
+          face: 'sans-serif'
+        },
+        borderWidth: 2,
+        shadow: true
+      },
+      groups: {
+        blog_published: {
+          color: { background: '#10b981', border: '#059669', highlight: { background: '#34d399', border: '#10b981' } }
+        },
+        blog_draft: {
+          color: { background: '#3b82f6', border: '#2563eb', highlight: { background: '#60a5fa', border: '#3b82f6' } }
+        },
+        money_category: {
+          color: { background: '#f59e0b', border: '#d97706', highlight: { background: '#fbbf24', border: '#f59e0b' } },
+          size: 28
+        },
+        tool_page: {
+          color: { background: '#8b5cf6', border: '#7c3aed', highlight: { background: '#a78bfa', border: '#8b5cf6' } }
+        }
+      },
+      edges: {
+        width: 1.5,
+        color: { color: 'rgba(148, 163, 184, 0.4)', highlight: '#38bdf8' },
+        smooth: { type: 'continuous' },
+        font: { size: 10, color: '#94a3b8', strokeWidth: 0 }
+      },
+      physics: {
+        forceAtlas2Based: {
+          gravitationalConstant: -50,
+          centralGravity: 0.01,
+          springLength: 100,
+          springConstant: 0.08
+        },
+        maxVelocity: 50,
+        solver: 'forceAtlas2Based',
+        timestep: 0.35,
+        stabilization: { iterations: 150 }
+      },
+      interaction: {
+        hover: true,
+        tooltipDelay: 150,
+        navigationButtons: true,
+        keyboard: true
+      }
+    };
+
+    const network = new vis.Network(container, data, options);
+  </script>
+</body>
+</html>
